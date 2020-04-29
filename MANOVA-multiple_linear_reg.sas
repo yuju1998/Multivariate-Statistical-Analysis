@@ -1,0 +1,44 @@
+data survey;
+infile"F:\大三\多變量\mydata\DATA.csv" dsd firstobs=2;
+input x1-x10 y1 y2;
+proc print data=survey;
+run;
+
+ods pdf  file="C:\Users\lab-107\Desktop\DATAmanova.pdf";
+proc glm data=survey;
+class x7-x10;
+model y1 y2 = x7 x8 x9 x10/ss3;
+manova h= x7-x10/printe printh summary;
+means x7-x10;
+run;
+ods pdf close;
+
+ods pdf  file="C:\Users\lab-106\Desktop\DATAregression1.pdf";
+proc reg data=survey;
+model y1 y2 = x1 x2 x3 x4 x5 x6 x7 x8 x9 x10;
+mtest x1=x2=x3=x4=x5=x6=x7=x8=x9=x10=0/printe;
+mtest x1=0/printe;
+mtest x2=0/printe;
+mtest x3=0/printe;
+mtest x4=0/printe;
+mtest x5=0/printe;
+mtest x6=0/printe;
+mtest x7=0/printe;
+mtest x8=0/printe;
+mtest x9=0/printe;
+mtest x10=0/printe;
+run;
+ods pdf close;
+
+ods pdf file="C:\Users\lab-106\Desktop\DATAregression2.pdf";
+proc reg data=survey;
+model y1 y2 = x3 x5 x7 x8 x9 x10;
+mtest x3=x5=x7=x8=x9=x10=0/printe;
+mtest x3=0/printe;
+mtest x5=0/printe;
+mtest x7=0/printe;
+mtest x8=0/printe;
+mtest x9=0/printe;
+mtest x10=0/printe;
+run;
+ods pdf close;
